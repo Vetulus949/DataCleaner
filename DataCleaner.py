@@ -65,7 +65,7 @@ def remove_data_column():
                                             delete=False)
     tf2_name = tf.name
     tf.close()
-    tf2 = open(tf2_name, "w")
+    tf2 = open(tf2_name, "w", newline='')
     writer = csv.writer(tf2)
     # select method
     if (method == "1"):
@@ -75,6 +75,7 @@ def remove_data_column():
             for i in range(len(r)):
                 if (i != index_to_remove):
                     row.append(r[i])
+            print(len(row))
             writer.writerow(row)
     elif (method == "2"):
         field_to_remove = input("enter the field to remove (case sensitive):\t")
@@ -120,7 +121,7 @@ def remove_data_row():
                                             delete=False)
     tf2_name = tf.name
     tf.close()
-    tf2 = open(tf2_name, "w")
+    tf2 = open(tf2_name, "w", newline='')
     writer = csv.writer(tf2)
     if (method == "1"):
         index_to_remove = int(input("enter row to remove:\t"))
