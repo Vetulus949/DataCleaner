@@ -4,9 +4,8 @@ import enum         # cause I like having enums and wtf are they not native?!
 import csv          # making csv file handling amillion times easier
 import tempfile     # write is done immediately, this is to basically store a buffer
 ## High Level Variables
-file_path = ""
-create_new = True
-new_file_name = ""
+input_path = ""
+output_path = ""
 tf1_name = ""
 tf2_name = ""
 #############################
@@ -15,8 +14,10 @@ tf2_name = ""
 ## Opens the file in the correct form
 def open_file():
     global tf1_name
+    global tf2_name
+    global input_path
     # open file
-    f = open(file_path, "rb")
+    f = open(input_path, "rb")
     # create temp file
     tf = tempfile.NamedTemporaryFile(prefix="DataCleanerWorkingFile_",
                                             suffix="",
@@ -25,20 +26,17 @@ def open_file():
     # copy file contents to tempfile
     for line in f.readlines():
         tf.write(line)
-    # close the real file
-    f.close()
-    # reset cursor for temp file
-    global tf1_name
+    # save directory
     tf1_name = tf.name
-    tf.close()    
+    # close files
+    tf.close() 
+    f.close()   
 ## Save file function
 def save_file():
     global tf1_name
     global tf2_name
-    if (create_new):
-        f = open(new_file_name, "w")
-    else:
-        f = open(file_path, "w")
+    global output_path
+    f = open(output_path, "w")
     tf = open(tf1_name, "r")
     for line in tf.readlines():
         f.write(line)
@@ -197,13 +195,12 @@ if __name__ == "__main__":
             "| | | / _` | __/ _` | | |   | |/ _ \/ _` | '_ \ / _ \ '__|\n" +
             "| |/ / (_| | || (_| | | \__/\ |  __/ (_| | | | |  __/ |   \n" +
             "|___/ \__,_|\__\__,_|  \____/_|\___|\__,_|_| |_|\___|_|   \n")
-    file_path = input("Please enter the file you intend to modify (*.csv):\t")
-    new_file_name = "new_dataset.csv"
+    input_path = input("Please enter the file you intend to modify (*.csv):\t")
     if (input("Do you want to create a new file? (Y/N Default: Yes):\t").upper() == "N"):
-        create_new = False
-    if (create_new):
-        new_file_name = input("what would you like to name the file? (no extension):\t") + ".csv"
-    if (os.path.isfile(file_path)):
+        output_path = input_path
+    else:
+        output_path = input("what would you like to name the file? (no extension):\t") + ".csv"
+    if (os.path.isfile(input_path)):
         open_file()
         main_menu()
         os.remove(tf1_name)
