@@ -75,7 +75,6 @@ def remove_data_column():
             for i in range(len(r)):
                 if (i != index_to_remove):
                     row.append(r[i])
-            print(len(row))
             writer.writerow(row)
     elif (method == "2"):
         field_to_remove = input("enter the field to remove (case sensitive):\t")
