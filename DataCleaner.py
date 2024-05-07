@@ -84,13 +84,15 @@ def remove_data_column():
             row = []
             if (header):
                 for i in range(len(r)):
+                    print(r[i])
                     if (r[i] == field_to_remove):
                         index_to_remove = i
+                        break
                 header = False
                 if (index_to_remove == None):
                     break
             for i in range(len(r)):
-                if (1 != index_to_remove):
+                if (i != index_to_remove):
                     row.append(r[i])
             writer.writerow(row)
         if index_to_remove == None:
